@@ -7,20 +7,20 @@ const express = require("express");
 // import express-session
 const session = require("express-session");
 
-// creating an instance of an express handlebars engine
-const hbs = exphbs.create({ helpers });
-
 // import express handlebars (this is a Node.js module)
 const exphbs = require("express-handlebars");
+
+// import helpers
+const helpers = require("./utils/helpers");
+
+// creating an instance of an express handlebars engine
+const hbs = exphbs.create({ helpers });
 
 // import sequelize connection, modularizing routes that were separated into different files for better organization and maintainabilitiy; library for referring to the database
 const sequelize = require("./config/databaseConnection");
 
 // Import controllers
-const routes = require("./controllers");
-
-// import helpers
-const helpers = require("./utils/helpers");
+const routes = require("./controllers/api");
 
 // connects sequelize to sessions
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
