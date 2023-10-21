@@ -1,10 +1,14 @@
 const router = require("express").Router();
 const { User } = require("../../models");
 
+// ! Remember: Never navigate to an API route
+// You can SEND a FETCH request to an API route, it's BTS work, just sending back data
+
 // endpoint `/` will be http://localhost:3001/api/user/register/
 // it is a lowercase `u`, because it refers to userRoutes, not User model
 router.post("/", async (req, res) => {
-  console.log("Line 7 Registration");
+  console.log("Line 10 Registration");
+
   try {
     const newUserData = await User.create(req.body);
     req.session.save(() => {
@@ -39,6 +43,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// Could have GET, but DELETE makes more sense
 router.delete("/logout", (req, res) => {
   req.session.destroy(() => {
     res.status(204).end();
