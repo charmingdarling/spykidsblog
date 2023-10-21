@@ -20,7 +20,7 @@ const hbs = exphbs.create({ helpers });
 const sequelize = require("./config/databaseConnection");
 
 // Import controllers
-const routes = require("./controllers/api");
+const routes = require("./controllers");
 
 // connects sequelize to sessions
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
