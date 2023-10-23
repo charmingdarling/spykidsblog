@@ -48,9 +48,10 @@ const sess = {
 };
 
 // set handlebars as the default template engine
-app.engine("handlebars", hbs.engine);
-app.set("view engine", "handlebars");
+app.engine("handlebars", hbs.engine); // set up Express.js to use Handlebars view engine to render dynamic content
+app.set("view engine", "handlebars"); // set `view engine` to `handlebars`
 
+// incorporating session management into Express.js, used to persist user data across multiple requests; the session middleware helps manage this data and associate it with a particular user session
 app.use(session(sess));
 
 // middleware function that serves static files and joins the segments together
