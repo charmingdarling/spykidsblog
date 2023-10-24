@@ -25,9 +25,14 @@ router.post("/", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    const newUserData = await User.findOne({ where: { email: email } });
-    const validPassword = await newUserData.checkPassword(password);
-    if (!newUserData && validPassword) {
+    const newUserData = await User.findOne({
+      where: { email: req.body.email },
+    });
+    console.log(newUserData + "THIS IS LINE 31 OF userRoutes.js");
+    const validPassword = await newUserData?.checkPassword(req.body.password);
+    console.log(validPassword + "THIS IS LINE 33 OF userRoutes.js");
+    // !Why is this failing? Not finding user? checkPassword is wrong?
+    if (newUserData && validPassword) {
       req.session.save(() => {
         req.session.user_id = newUserData.id;
         req.session.username = newUserData.username;
@@ -43,7 +48,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Could have GET, but DELETE makes more sense
+// Could have (routers.get) GET, but DELETE makes more sense
 router.delete("/logout", (req, res) => {
   req.session.destroy(() => {
     res.status(204).end();
