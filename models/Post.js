@@ -18,10 +18,6 @@ Post.init(
         key: "id",
       },
     },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
