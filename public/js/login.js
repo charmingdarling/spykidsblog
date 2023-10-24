@@ -7,7 +7,7 @@ const loginFormHandler = async (event) => {
 
   if (email && password) {
     // Send a POST request to the API endpoint
-    const response = await fetch("/api/users/login", {
+    const response = await fetch("/api/user/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
       headers: { "Content-Type": "application/json" },
@@ -32,6 +32,8 @@ const signupFormHandler = async (event) => {
   if (username && email && password) {
     const response = await fetch("/api/user", {
       method: "POST",
+      // stringify data, because data in transmission can only be sent as a string
+      // except when it gets to our routes, it has already been parsed due to server.js having "app.use(express.json());" Example of Parse: Username = "John Smith"
       body: JSON.stringify({ username, email, password }),
       headers: { "Content-Type": "application/json" },
     });
