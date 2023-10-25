@@ -36,18 +36,18 @@
           <div class="col-md-8">
             <h4><a href="/profile/{{post.id}}">{{post.title}}</a></h4>
             <p>{{post.content}}</p>
+            <form class="edit-form" data-id="{{post.id}}" name="post-name-edit" style="display: none">
+              <input class="form-input" type="text" value="{{post.title}}" name="post-name-edit" />
+              <textarea class="form-input" name="post-content-edit">{{post.content}}</textarea>
+              <button type="submit">CREATE</button>
+            </form>
           </div>
+          
           <div class="col-md-4">
-            <button
-              class="btn btn-sm btn-danger"
-              data-id="{{post.id}}"
-            >DELETE</button>
-        <button type="submit" class="btn btn-primary">Edit</button>
+            <button class="btn btn-sm btn-danger" data-id="{{post.id}}" type="submit">DELETE</button>
+            <button class="btn btn-sm btn-primary" data-id="{{post.id}}" type="submit" >EDIT</button>
           </div>
               
-      
-      
-    
         </div>
       {{/each}}
     </div>
