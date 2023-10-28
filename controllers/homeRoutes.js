@@ -2,33 +2,23 @@ const router = require("express").Router();
 const { User, Post } = require("../models");
 const withAuth = require("../utils/auth");
 
-// Note: If you are in your homeRoutes, you may need to change this to /register to get register.handlebars
+// homeRoutes What the server does
 
 router.get("/", async (req, res) => {
   try {
+    // get all posts and JOIN with user data
     const postData = await Post.findAll({
-      include: [
-        {
-          model: User,
-        },
-      ],
+      include: [{ model: User }],
+      order: [["createdAt", "DESC"]],
     });
+
+    // serialize data so the template can read it
     const posts = postData.map((post) => post.get({ plain: true }));
-
-    req.session.save(() => {
-      // set up a session variable to count the number of times we visit the homepage
-      if (req.session.countVisit) {
-        // if the `countVisit` session variables already exists, increment it by 1
-        req.session.countVisit++;
-      } else {
-        // if the `countVisit` session doesn't exist, set it to 1
-      }
-      req.session.countVisit = 1;
-
-      res.render("homepage", {
-        posts,
-        logged_in: req.session.logged_in,
-      });
+    console.log(posts);
+    // pass serialized data and session flag into the template
+    res.render("homepage", {
+      posts,
+      logged_in: req.session.logged_in,
     });
   } catch (err) {
     console.error(err);
@@ -36,18 +26,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-//     // Pass serialized data and session flag into template
-//     // When using `res.render`, you provide the view name without a leading slash'/'
-//     // res.renders the "homepage"
-//     res.render("homepage", {
-//       posts,
-//       logged_in: req.session.logged_in,
-//     })
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json(err);
-//   }
-// });
+// Need signup/register
 
 // http://localhost:3001/login
 
@@ -56,6 +35,32 @@ router.get("/login", (req, res) => {
     return res.redirect("/login");
   }
   res.render("login");
+});
+
+router.get("/singlepost/:id", async (req, res) => {
+  try {
+    const postData = await Post.findOne({
+      where: {
+        id: req.params.id,
+      },
+      include: [
+        {
+          model: User,
+          attributes: ["username", "email"],
+        },
+      ],
+    });
+    console.log(req.session);
+    const post = postData.get({ plain: true });
+    console.log(post);
+    res.render("singlepost", {
+      post,
+      user: req.session.username,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // exporting the router so it can be in the index
