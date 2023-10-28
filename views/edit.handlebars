@@ -1,0 +1,33 @@
+{{! Create a form that is filled out with the post info from the db 
+add a button to submit
+onsubmit run a function that sends your edited post data to the update post route
+ }}
+
+{{!-- 
+ <input type="hidden" id="postId" value="{{post.id}}" />
+ <input id="title" value="{{post.title}}" type="text" />
+
+ <button>Submit</button>
+  --}}
+
+<div class="col-md-6">
+  <h2>Update</h2>
+
+  <form class="form update-form">
+    <div class="form-group">
+      <label for="update-title">title:</label>
+      {{! <input class="form-input" type="text" id="update-title" /> }}
+      <input type="hidden" id="postID" value="{{post.id}}" />
+      <input id="title" value="{{post.title}}" type="text" />
+    </div>
+    <div class="form-group">
+      <label for="password-login">content:</label>
+      <input class="form-input" type="password" id="update-content" />
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit">Update</button>
+    </div>
+  </form>
+</div>
+
+<script src=""></script>
