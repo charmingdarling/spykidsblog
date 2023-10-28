@@ -1,0 +1,59 @@
+<div class="row mb-4 singlePost">
+  <div class="col-md-5">
+    <h2>
+      {{post.title}}
+    </h2>
+    <h4>
+      {{post.User.username}}
+    </h4>
+    {{post.content}}
+
+  </div>
+</div>
+
+{{#if logged_in}}
+  {{! give them a form to comment
+  Do I need to do a #each for the comments? }}
+
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <form class="post-comment">
+        <label for="comment">Comment:</label>
+        <input class="form-input" type="text" id="comment" name="comment" />
+        <textarea
+          class="form-input"
+          id="content"
+          name="content"
+        >{{comment.content}}</textarea>
+        <button type="submit">ADD COMMENT</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <button
+      class="btn btn-sm btn-danger"
+      data-id="{{post.Comment.id}}"
+      type="submit"
+    >DELETE</button>
+    <button
+      class="btn btn-sm btn-primary edit-btn"
+      data-id="{{post.Comment.id}}"
+      type="submit"
+    >EDIT</button>
+  </div>
+
+  {{! also conditionally attach js script tag for commenting }}
+{{/if}}
+
+{{! 
+
+if logged-in > then show this handlebars, but if not then redirect to login
+
+Creating Dashboard Selection - 
+
+  Create Post
+  Edit Post
+  
+  
+  }}
