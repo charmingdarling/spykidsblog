@@ -3,12 +3,12 @@
   <div class="row mb-4 project">
     <div class="col-md-5">
       <h2>
-        <!-- Call helper function with triple brackets to render the emoji span as HTML -->
-        {{{get_emoji}}}
         <a href="/singlepost/{{post.id}}">{{post.title}}</a>
       </h2>
       <p>Created by
-        {{post.username}}
+        <b>
+          {{post.User.username}}
+        </b>
         on
         {{format_date post.date_created}}</p>
     </div>
