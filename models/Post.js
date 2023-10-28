@@ -23,7 +23,11 @@ Post.init(
       allowNull: false,
     },
     content: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notEmpty: true, // Ensure that the content is not empty
+      },
     },
     date_created: {
       type: DataTypes.DATE,
