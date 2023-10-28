@@ -17,19 +17,23 @@
 
         <nav>
           <!-- Conditionally render login or logout links -->
+          <a href="/">home</a>
+          |
           {{#if logged_in}}
-            <a href="/profile">profile</a>
-            |
-            <button class="no-button" id="logout">logout</button>
+            {{#if is_profile_page}}
+              <!-- Why is my logout showing when I am on the profile page? -->
+              <a href="#" class="no-button" id="logout">logout</a>
+            {{else}}
+              <a href="/profile">profile</a>
+              |
+              <a href="#" class="no-button" id="logout">logout</a>
+            {{/if}}
           {{else}}
-            <a href="/">home</a>
-            |
             <a href="/login">login</a>
             |
+            {{! <a href="/signup">signup</a> }}
           {{/if}}
-
         </nav>
-
       </header>
 
       <main class="container container-fluid mt-5">
