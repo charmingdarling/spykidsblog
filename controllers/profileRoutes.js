@@ -7,6 +7,8 @@ const withAuth = require("../utils/auth");
 // get one user with serialized data
 router.get("/", withAuth, async (req, res) => {
   try {
+    // Set is_profile_page to true for this route - flicks the "on switch" so that it is true
+    const is_profile_page = true;
     // search database for a dish with an id that matches params
     const userData = await User.findByPk(req.session.user_id, {
       include: [Post], // we want to access all the userData and include the Post model inside an array],
@@ -15,7 +17,10 @@ router.get("/", withAuth, async (req, res) => {
     // use .get({ plain: true }) on the
     const user = userData.get({ plain: true });
     // then, `user` template is rendered and userData is passed
-    res.render("profile", user);
+    res.render("profile", {
+      user,
+      is_profile_page: true, // set the is_profile_page property to true
+    });
   } catch (err) {
     res.status(500).json(err);
   }
