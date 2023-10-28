@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Spy Kids Blog - Kids Only</title>
+    <title>Kids Blog</title>
     <link rel="stylesheet" href="/css/jass.css" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
@@ -12,16 +12,14 @@
     <div class="flex-column justify-space-around">
       <header class="display-flex justify-space-between align-center p-2">
         <h1>
-          Spy Kids Blog
+          Kids Blog
         </h1>
-
         <nav>
-          <!-- Conditionally render login or logout links -->
           <a href="/">home</a>
           |
           {{#if logged_in}}
             {{#if is_profile_page}}
-              <!-- Why is my logout showing when I am on the profile page? -->
+              <!-- Why is my logout not showing when I am on the profile page? -->
               <a href="#" class="no-button" id="logout">logout</a>
             {{else}}
               <a href="/profile">profile</a>
