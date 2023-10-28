@@ -5,16 +5,18 @@ const { User, Post } = require("../../models");
 // You can SEND a FETCH request to an API route, it's BTS work, just sending back data
 
 // endpoint `/` will be http://localhost:3001/api/user/post/
+// `api` only appears in insomnia - on the browser url, it never shows up
 // it is a lowercase `u`, because it refers to userRoutes, not User model
 router.post("/", async (req, res) => {
-  console.log("Line 10 Registration");
-
   try {
-    await Post.create({
-      ...req.body,
+    const { title, content } = req.body;
+    const newPostCreated = await Post.create({
+      title,
+      content,
       user_id: req.session.user_id,
     });
-    res.json({ message: "Post successfully created." });
+
+    res.status(200).json(newPostCreated);
   } catch (err) {
     console.error(err);
     res.status(400).json(err);
@@ -22,8 +24,6 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  console.log("Line 10 Registration");
-
   try {
     await Post.update(req.body, {
       where: {
@@ -31,6 +31,21 @@ router.put("/:id", async (req, res) => {
       },
     });
     res.json({ message: "Post successfully updated." });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json(err);
+  }
+});
+
+// Get a singlepost
+router.get("/singlepost/:id", async (req, res) => {
+  try {
+    await Post.findOne({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.json({ message: "Post retrieved." });
   } catch (err) {
     console.error(err);
     res.status(400).json(err);
