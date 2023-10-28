@@ -5,16 +5,41 @@ const withAuth = require("../utils/auth");
 // display route,
 
 // get one user with serialized data
-router.get("/user/:id", withAuth, async (req, res) => {
+router.get("/", withAuth, async (req, res) => {
   try {
     // search database for a dish with an id that matches params
-    const userData = await User.findByPk(req.params.id);
-    console.log(`${userData} LINE 12ish`);
+    const userData = await User.findByPk(req.session.user_id, {
+      include: [Post], // we want to access all the userData and include the Post model inside an array],
+    }); // accessing the session with a cookie and want to make sure that whoever signs in when they click on the profile page, they get the correct profile page
+    console.log(`${userData} LINE 18ish`);
     // use .get({ plain: true }) on the
     const user = userData.get({ plain: true });
     // then, `user` template is rendered and userData is passed
-    res.render("profile", userData);
+    res.render("profile", user);
   } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/edit/:id", withAuth, async (req, res) => {
+  try {
+    const postData = await Post.findOne({
+      where: { id: req.params.id, user_id: req.session.user_id },
+      include: [
+        {
+          model: Comment,
+          include: [User],
+        },
+      ],
+    });
+    const post = postData.get({ plain: true });
+    console.log(post);
+    res.render("edit", {
+      post,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    console.error(err);
     res.status(500).json(err);
   }
 });
@@ -64,7 +89,7 @@ router.get("/:id", withAuth, async (req, res) => {
       ],
     });
     const user = userData.get({ plain: true });
-    console.log(user);
+    console.log(`${user} is found and now logged in. LINE 67.`);
     res.render("profile", {
       user,
       logged_in: req.session.logged_in,
@@ -73,13 +98,6 @@ router.get("/:id", withAuth, async (req, res) => {
     console.error(err);
     res.status(500).json(err);
   }
-});
-
-router.get("/login", (req, res) => {
-  if (req.session.logged_in) {
-    return res.redirect("/login");
-  }
-  res.render("login");
 });
 
 // exporting the router so it can be in the index
