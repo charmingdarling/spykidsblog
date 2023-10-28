@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const { User } = require("../../models");
+const withAuth = require("../../utils/auth");
 
 // ! Remember: Never navigate to an API route
 // You can SEND a FETCH request to an API route, it's BTS work, just sending back data
-
 // endpoint `/` will be http://localhost:3001/api/user/register/
 // it is a lowercase `u`, because it refers to userRoutes, not User model
 router.post("/", async (req, res) => {
@@ -53,6 +53,28 @@ router.delete("/logout", (req, res) => {
   req.session.destroy(() => {
     res.status(204).end();
   });
+});
+
+router.put("/update/pass", withAuth, (req, res) => {
+  try {
+    const [rowsChanged] = User.update(
+      { password: req.body.password },
+      {
+        where: {
+          id: req.session.user_id,
+        },
+      }
+    );
+
+    res.json(
+      rowsChanged > 0
+        ? res.json({ message: rowsChanged + " rows changed" })
+        : res.status(404).end()
+    );
+  } catch (err) {
+    console.error(err);
+    res.status(500).end();
+  }
 });
 
 module.exports = router;
