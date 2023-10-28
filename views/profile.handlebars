@@ -15,15 +15,20 @@
       </div>
       <div class="form-group">
         <label for="content">Content:</label>
-        <textarea class="form-input" id="content" name="content"></textarea>
+        <textarea
+          class="form-input"
+          type="text"
+          id="content"
+          name="content"
+        ></textarea>
       </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create</button>
+      </div>
+    </form>
 
-      <form input type="hidden" name="postType" id="postType" value="create">
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary">Create</button>
-        </div>
-      </form>
-
+    <!-- RIGHT HERE, WHEN I CLICK CREATE, IT DOESN'T SHOW UP ME THE NEW POST. -->
+    <!-- GENERATE PAGE FOR SHOWING POST THAT WAS JUST CREATED -->
 
   </div>
 
@@ -36,18 +41,40 @@
           <div class="col-md-8">
             <h4><a href="/profile/{{post.id}}">{{post.title}}</a></h4>
             <p>{{post.content}}</p>
-            <form class="edit-form" data-id="{{post.id}}" name="post-name-edit" style="display: none">
-              <input class="form-input" type="text" value="{{post.title}}" name="post-name-edit" />
-              <textarea class="form-input" name="post-content-edit">{{post.content}}</textarea>
+            <form
+              class="edit-form"
+              data-id="{{post.id}}"
+              name="post-name-edit"
+              style="display: none"
+            >
+              <input
+                class="form-input"
+                type="text"
+                value="{{post.title}}"
+                name="post-name-edit"
+              />
+              <textarea
+                class="form-input"
+                type="text"
+                name="post-content-edit"
+              >{{post.content}}</textarea>
               <button type="submit">CREATE</button>
             </form>
           </div>
-          
+
           <div class="col-md-4">
-            <button class="btn btn-sm btn-danger" data-id="{{post.id}}" type="submit">DELETE</button>
-            <button class="btn btn-sm btn-primary" data-id="{{post.id}}" type="submit" >EDIT</button>
+            <button
+              class="btn btn-sm btn-danger"
+              data-id="{{post.id}}"
+              type="submit"
+            >DELETE</button>
+            <button
+              class="btn btn-sm btn-primary edit-btn"
+              data-id="{{post.id}}"
+              type="submit"
+            >EDIT</button>
           </div>
-              
+
         </div>
       {{/each}}
     </div>
