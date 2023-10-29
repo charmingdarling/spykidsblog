@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { User, Post } = require("../../models");
+const withAuth = require("../../utils/auth");
 
 // ! Remember: Never navigate to an API route
 // You can SEND a FETCH request to an API route, it's BTS work, just sending back data
@@ -22,15 +23,18 @@ router.post("/", async (req, res) => {
     res.status(400).json(err);
   }
 });
-
-router.put("/:id", async (req, res) => {
+// http://localhost:3001/api/post/:id
+router.put("/:id", withAuth, async (req, res) => {
   try {
-    await Post.update(req.body, {
-      where: {
-        id: req.params.id,
-      },
+    const updateData = await Post.update(req.params.id);
+    // req.body is the updateData
+    const { title, content } = req.body;
+    await updateData.update({
+      title,
+      content,
     });
-    res.json({ message: "Post successfully updated." });
+
+    res.status(200).json(updateData);
   } catch (err) {
     console.error(err);
     res.status(400).json(err);
@@ -38,6 +42,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // Get a singlepost
+// http://localhost:3001/api/post/singlepost/:id
 router.get("/singlepost/:id", async (req, res) => {
   try {
     await Post.findOne({
