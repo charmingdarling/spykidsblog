@@ -19,7 +19,6 @@
           |
           {{#if logged_in}}
             {{#if is_profile_page}}
-              <!-- Why is my logout not showing when I am on the profile page? -->
               <a href="#" class="no-button" id="logout">logout</a>
             {{else}}
               <a href="/profile">profile</a>
@@ -29,7 +28,7 @@
           {{else}}
             <a href="/login">login</a>
             |
-            {{! <a href="/signup">signup</a> }}
+            <a href="/signup">signup</a>
           {{/if}}
         </nav>
       </header>
