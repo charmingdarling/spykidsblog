@@ -1,4 +1,7 @@
-const router = require("express").Router(); // Set up Express router
+// Set up Express router, responsible for parsing incoming JSON requests.
+// Auto parses request body if the 'Content-Type' header is set to "application/json"
+const router = require("express").Router();
+
 const { User } = require("../../models"); // Require User model from models folder
 const withAuth = require("../../utils/auth"); // Import middleware function for authentication, checking if user is logged in before they can use a route
 
@@ -33,13 +36,15 @@ router.post("/login", async (req, res) => {
   try {
     // Find user by email from the request body
     const newUserData = await User.findOne({
+      // req.body.email is accessing the parsed JSON data from the request body
+      // This is possible because of the 'express.json()' middleware already processed the JSON data and populated the 'req.body' with the parsed JSON object
       where: { email: req.body.email },
     });
 
     // Validate the user's password
     const validPassword = await newUserData?.checkPassword(req.body.password);
 
-    // If user exists and password is correct, create a session and respond with user data4
+    // If user exists and password is correct, create a session and respond with user data
     if (newUserData && validPassword) {
       req.session.save(() => {
         req.session.user_id = newUserData.id;
@@ -57,6 +62,11 @@ router.post("/login", async (req, res) => {
     res.status(400).json(err);
   }
 });
+
+// Note Above: Putting it all together, this code is getting a POST request from the loginFormHandler, which is client-side JavaScript that handles form submissions for user login
+
+// The server-side code handling the "/api/user/login" endpoint should be designed to parse the JSON data from the request body.
+// The server-side code, using the Express framework, implicitly handles parsing JSON data from the request body. Specifically, `express.json()`  middleware, which is built into Express.
 
 // Route to handle logging out user at "/logout" endpoint (DELETE request)
 // Could have (routers.get) GET, but DELETE makes more sense
