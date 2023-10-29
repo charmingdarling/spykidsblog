@@ -3,7 +3,7 @@ const { Model, DataTypes } = require("sequelize");
 const bcrypt = require("bcrypt");
 const sequelize = require("../config/databaseConnection");
 
-// Create User clsas that extends Sequelize model
+// Create User class that extends Sequelize model
 class User extends Model {
   // Method that checks if the given password pairs with the stored hash password
   checkPassword(loginPw) {
