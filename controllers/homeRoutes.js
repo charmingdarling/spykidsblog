@@ -26,15 +26,23 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Need signup/register
-
 // http://localhost:3001/login
-
 router.get("/login", (req, res) => {
   if (req.session.logged_in) {
     return res.redirect("/login");
   }
   res.render("login");
+});
+
+// Route handlling to show signup form
+// http://localhost:3001/signup
+router.get("/signup", async (req, res) => {
+  try {
+    // Show the signup form
+    res.render("signup");
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 router.get("/singlepost/:id", async (req, res) => {
