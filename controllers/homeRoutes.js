@@ -1,24 +1,33 @@
+// Set up Express router, responsible for parsing incoming JSON requests.
+// Auto parses request body if the 'Content-Type' header is set to "application/json"
 const router = require("express").Router();
-const { User, Post } = require("../models");
-const withAuth = require("../utils/auth");
+const { User, Post } = require("../models"); // Require User, Post models from models folder
+const withAuth = require("../utils/auth"); // Import middleware function for authentication, checking if user is logged in before they can use a route
 
-// homeRoutes What the server does
-
+// Route to handle homepage root endpoint with findAll(), (GET request)
+// http://localhost:3001/
 router.get("/", async (req, res) => {
   try {
     // get all posts and JOIN with user data
+    // purpose of this code is to convert an array of Sequelize model instances into an array of plain JS objects.
+    // This is often done when passing data to templates for rendering or when preparing data for a JSON response.
+    // Plain JS objects are easier to work with in different contexts than the Sequelize model instances
     const postData = await Post.findAll({
       include: [{ model: User }],
       order: [["createdAt", "DESC"]],
     });
 
     // serialize data so the template can read it
+    // postData = array of Sequelize model instances representing posts
+    // map over each element in postData array to get 'plain: true'
+    // {plain: true} = indicates that the result should be plain JS object without any Sequelize-specific metadata
     const posts = postData.map((post) => post.get({ plain: true }));
     console.log(posts);
     // pass serialized data and session flag into the template
     res.render("homepage", {
+      // render an HTML view named 'homepage' as first argument, second argument is an object containing data that will be passed to the view for rendering
       posts,
-      logged_in: req.session.logged_in,
+      logged_in: req.session.logged_in, // include information about whether a user is logged in when rendering views, conditionally show different content based on user authentication status
     });
   } catch (err) {
     console.error(err);
@@ -26,15 +35,17 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Route to handle login endpoint (GET request)
 // http://localhost:3001/login
 router.get("/login", (req, res) => {
-  if (req.session.logged_in) {
-    return res.redirect("/login");
+  // conditionally checks if user is logged in by examining 'logged_in' property in the 'req.session' object
+  if !(req.session.logged_in) {
+    return res.redirect("/"); // if truthy, redirect them to homepage endpoint
   }
   res.render("login");
 });
 
-// Route handlling to show signup form
+// Route handling to show signup form (GET request)
 // http://localhost:3001/signup
 router.get("/signup", async (req, res) => {
   try {
@@ -45,6 +56,8 @@ router.get("/signup", async (req, res) => {
   }
 });
 
+// Route handle to a single post with findOne(), (GET request)
+// http://localhost:3001/signup/:id
 router.get("/singlepost/:id", async (req, res) => {
   try {
     const postData = await Post.findOne({
