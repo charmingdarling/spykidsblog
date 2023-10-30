@@ -39,7 +39,7 @@ router.get("/", async (req, res) => {
 // http://localhost:3001/login
 router.get("/login", (req, res) => {
   // conditionally checks if user is logged in by examining 'logged_in' property in the 'req.session' object
-  if !(req.session.logged_in) {
+  if (req.session.logged_in) {
     return res.redirect("/"); // if truthy, redirect them to homepage endpoint
   }
   res.render("login");
@@ -49,17 +49,17 @@ router.get("/login", (req, res) => {
 // http://localhost:3001/signup
 router.get("/signup", async (req, res) => {
   try {
-    // Show the signup form
-    res.render("signup");
+    res.render("signup"); // Show the signup form
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-// Route handle to a single post with findOne(), (GET request)
+// Route handle to a single post with findOne() by 'id', (GET request)
 // http://localhost:3001/signup/:id
 router.get("/singlepost/:id", async (req, res) => {
   try {
+    // Fetch the post data with the associated user data
     const postData = await Post.findOne({
       where: {
         id: req.params.id,
@@ -72,12 +72,14 @@ router.get("/singlepost/:id", async (req, res) => {
       ],
     });
     console.log(req.session);
+    // Convert the Sequelize model instance to a plain JavaScript object
     const post = postData.get({ plain: true });
     console.log(post);
+    // If the post data is retrieved, the route handler renders the "singlepost" view by...
     res.render("singlepost", {
-      post,
-      user: req.session.username,
-      logged_in: req.session.logged_in,
+      post, // ... passing the post data
+      user: req.session.username, // ... the username from the session
+      logged_in: req.session.logged_in, // ... the login status ... all as variables that can be used in the view
     });
   } catch (err) {
     res.status(500).json(err);
