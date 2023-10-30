@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { User, Post, Comment } = require("../models");
 const withAuth = require("../utils/auth");
 
-// display route,
+// Display Route
 
 // get one user with serialized data
 router.get("/", withAuth, async (req, res) => {
@@ -22,57 +22,6 @@ router.get("/", withAuth, async (req, res) => {
       is_profile_page: true, // set the is_profile_page property to true
     });
   } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-router.get("/edit/:id", withAuth, async (req, res) => {
-  try {
-    const postData = await Post.findOne({
-      where: { id: req.params.id, user_id: req.session.user_id },
-      include: [
-        {
-          model: Comment,
-          include: [User],
-        },
-      ],
-    });
-    const post = postData.get({ plain: true });
-    console.log(post);
-    res.render("edit", {
-      post,
-      logged_in: req.session.logged_in,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json(err);
-  }
-});
-
-router.get("/", withAuth, async (req, res) => {
-  try {
-    const userData = await User.findOne({
-      where: { id: req.session.user_id },
-      include: [
-        {
-          model: Post,
-          include: [
-            {
-              model: Comment,
-              include: [User],
-            },
-          ],
-        },
-      ],
-    });
-    const user = userData.get({ plain: true });
-    console.log(user);
-    res.render("profile", {
-      user,
-      logged_in: req.session.logged_in,
-    });
-  } catch (err) {
-    console.error(err);
     res.status(500).json(err);
   }
 });
@@ -104,6 +53,57 @@ router.get("/:id", withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+router.get("/edit/:id", withAuth, async (req, res) => {
+  try {
+    const postData = await Post.findOne({
+      where: { id: req.params.id, user_id: req.session.user_id },
+      include: [
+        {
+          model: Comment,
+          include: [User],
+        },
+      ],
+    });
+    const post = postData.get({ plain: true });
+    console.log(post);
+    res.render("edit", {
+      post,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+});
+
+// router.get("/", withAuth, async (req, res) => {
+//   try {
+//     const userData = await User.findOne({
+//       where: { id: req.session.user_id },
+//       include: [
+//         {
+//           model: Post,
+//           include: [
+//             {
+//               model: Comment,
+//               include: [User],
+//             },
+//           ],
+//         },
+//       ],
+//     });
+//     const user = userData.get({ plain: true });
+//     console.log(user);
+//     res.render("profile", {
+//       user,
+//       logged_in: req.session.logged_in,
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json(err);
+//   }
+// });
 
 // exporting the router so it can be in the index
 module.exports = router;
