@@ -1,12 +1,14 @@
 <div class="row mb-4 singlePost">
   <div class="col-md-5">
-    <h2>
+    <h3>
       {{post.title}}
-    </h2>
-    <h4>
-      {{post.User.username}}
-    </h4>
-    {{post.content}}
+    </h3>
+    Written By:
+    {{post.User.username}}
+    at
+    {{post.date_created}}
+    <hr />
+    <p>{{post.content}}</p>
 
   </div>
 </div>
