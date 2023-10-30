@@ -2,53 +2,43 @@ TODO.
 
 make seed data
 
-fix logout in the nav header
+After signing up - it makes me create a new post
+Toggle? 
 
-profile.handlebars
-- Problem: Need to figure out how to generate the newly created title and content 
-  - What do I need to do so that once I click on create, that it displays the new content 
-  - Sometimes, when I do create a title and content, I am taken back to the login page (often when I try to create something after being idle for a bit or doing a second create post)
 
+Questions for Erik: 
+
+- I think I need to make a helper function. 
+     - toLocaleString for post.date_created
+	- I am not quite sure where I need to add it in. 
+
+- In my api/postRoutes, I am having issues with formatting the date right in my views for singlepost/:id. 
+
+Am I not referring to the time correctly? {{post.date_created}} or should it be ...?
+
+---------------------------------------------
+
+THEN I am presented with the post title, contents, post creator’s username, and date created for that post and have the option to leave a comment
+
+WHEN I enter a comment and click on the submit button while signed in
+THEN the comment is saved and the post is updated to display the comment, the comment creator’s username, and the date created 
+
+WHEN I click on the dashboard option in the navigation
+THEN I am taken to the dashboard and presented with any blog posts I have already created and the option to add a new blog post
+
+WHEN I click on the button to add a new blog post
+THEN I am prompted to enter both a title and contents for my blog post
+
+WHEN I click on the button to create a new blog post
+THEN the title and contents of my post are saved and I am taken back to an updated dashboard with my new blog post
+
+WHEN I click on one of my existing posts in the dashboard
+THEN I am able to delete or update my post and taken back to an updated dashboard
+
+WHEN I click on the logout option in the navigation
+THEN I am signed out of the site
+
+WHEN I am idle on the site for more than a set time
+THEN I am able to view posts and comments but I am prompted to log in again before I can add, update, or delete posts
 
 TA-DONE.
-
-Move edit button below delete
-
------------
-
-After sequelize.sync force true...
-
-1st Visit Ever.
-  - localhost:3001 
-    - Shows Header+Nav "Spy Kids Blog" Header in H1 and the login button
-
-    ** Should be able to see the seed data on
-
-Click on login 
-  -  localhost:3001/login 
-    - Shows Header+Nav "Spy Kids Blog" Header in H1 and the login button
-    - Be able to go to login-landing page OR
-    - Be able to go to the signup-landing page
-
-Click on signup
-  - Taken to:
-  - http://localhost:3001/profile
-  - Welcome, user.username. (test1)
-    - Create New Post:
-        - Title:
-        - Content:
-
-      {
-        id: 1,
-        username: 'test1',
-        email: 'test1@test.com',
-        password: '$2b$10$Qt91SydssIX5iLkzTPlnyu46mAi7RL9umICxTcMER3/VRWsI2F4.u',
-        Posts: []
-      }
-
-  ** Why is my Posts: []? Shouldn't it have something in there? Like the content I created?
-
-  - When I try to click "logout", function doesn't work.
-
-
-- Comment Submission
