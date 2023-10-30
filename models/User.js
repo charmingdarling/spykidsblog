@@ -66,7 +66,7 @@ User.init(
         return updatedUserPassword;
       },
     },
-    sequelize, // Sequelize instance is being u sed
+    sequelize, // Sequelize instance is being used
     timestamps: false, // controls if Sequelize should create `createdAt` and updatedAt` timestamp fields in model
     freezeTableName: true, // True - prevents Sequelize from pluralizing the table name based on the model name
     underscored: true, // Uses snake_case for automatically generated database column names. createdAt will be created_at
