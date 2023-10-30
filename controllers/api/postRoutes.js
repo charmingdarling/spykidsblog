@@ -1,13 +1,16 @@
+// Set up Express router, responsible for parsing incoming JSON requests.
+// Auto parses request body if the 'Content-Type' header is set to "application/json"
 const router = require("express").Router();
-const { User, Post } = require("../../models");
-const withAuth = require("../../utils/auth");
+const { User, Post } = require("../../models"); // Require User, Post models from models folder
+const withAuth = require("../../utils/auth"); // Import middleware function for authentication, checking if user is logged in before they can use a route
 
 // ! Remember: Never navigate to an API route
 // You can SEND a FETCH request to an API route, it's BTS work, just sending back data
-
-// endpoint `/` will be http://localhost:3001/api/user/post/
 // `api` only appears in insomnia - on the browser url, it never shows up
 // it is a lowercase `u`, because it refers to userRoutes, not User model
+
+// Route to handle post endpoint (POST Request)
+// http://localhost:3001/api/user/post/
 router.post("/", async (req, res) => {
   try {
     const { title, content } = req.body;
@@ -23,6 +26,8 @@ router.post("/", async (req, res) => {
     res.status(400).json(err);
   }
 });
+
+// Route to handle updating a post (PUT Request)
 // http://localhost:3001/api/post/:id
 router.put("/:id", withAuth, async (req, res) => {
   try {
@@ -41,7 +46,7 @@ router.put("/:id", withAuth, async (req, res) => {
   }
 });
 
-// Get a singlepost
+// Route to handle getting a singlepost (GET Request)
 // http://localhost:3001/api/post/singlepost/:id
 router.get("/singlepost/:id", async (req, res) => {
   try {
@@ -57,6 +62,8 @@ router.get("/singlepost/:id", async (req, res) => {
   }
 });
 
+// Router to delete a post
+// http://localhost:3001/api/post/:id
 // Could have (routers.get) GET, but DELETE makes more sense
 router.delete("/:id", async (req, res) => {
   try {
@@ -73,4 +80,4 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = router; // exporting the router so it can be in the index

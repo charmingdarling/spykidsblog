@@ -86,5 +86,4 @@ router.get("/singlepost/:id", async (req, res) => {
   }
 });
 
-// exporting the router so it can be in the index
-module.exports = router;
+module.exports = router; // exporting the router so it can be in the index
