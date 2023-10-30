@@ -4,7 +4,8 @@ const withAuth = require("../utils/auth");
 
 // Display Route
 
-// get one user with serialized data
+// Route to retrieve one user using findByPK() at the root endpoint
+// http://localhost:3001/profile/
 router.get("/", withAuth, async (req, res) => {
   try {
     // Set is_profile_page to true for this route - flicks the "on switch" so that it is true
@@ -26,8 +27,11 @@ router.get("/", withAuth, async (req, res) => {
   }
 });
 
+// Route to handle finding one user by 'id'
+// http://localhost:3001/:id
 router.get("/:id", withAuth, async (req, res) => {
   try {
+    // Fetch user data including associated posts and comments
     const userData = await User.findOne({
       where: { id: req.session.user_id },
       include: [
@@ -42,9 +46,11 @@ router.get("/:id", withAuth, async (req, res) => {
         },
       ],
     });
-    const user = userData.get({ plain: true });
-    console.log(`${user} is found and now logged in. LINE 67.`);
+
+    const user = userData.get({ plain: true }); // Convert the Sequelize MODEL instance to a plain JavaScript object
+    console.log(`${user} is found and now logged in. --- LINE 51 ---.`); // Log a message indicating that the user is found and now logged in
     res.render("profile", {
+      // If user data is retrieved, the route handler renders the 'profile' view passing the user data and the login status variables to be used in view
       user,
       logged_in: req.session.logged_in,
     });
@@ -54,8 +60,11 @@ router.get("/:id", withAuth, async (req, res) => {
   }
 });
 
+// Route to handle edit a specific post from a user by 'id', findOne()
+// http://localhost:3001/edit/:id
 router.get("/edit/:id", withAuth, async (req, res) => {
   try {
+    // Fetch post data including associated comments
     const postData = await Post.findOne({
       where: { id: req.params.id, user_id: req.session.user_id },
       include: [
@@ -65,9 +74,10 @@ router.get("/edit/:id", withAuth, async (req, res) => {
         },
       ],
     });
-    const post = postData.get({ plain: true });
+    const post = postData.get({ plain: true }); // Convert the Sequelize model instance to a plain JavaScript object
     console.log(post);
     res.render("edit", {
+      // Render the "edit" view with the post data and session information
       post,
       logged_in: req.session.logged_in,
     });
@@ -105,5 +115,5 @@ router.get("/edit/:id", withAuth, async (req, res) => {
 //   }
 // });
 
-// exporting the router so it can be in the index
+// Exporting the router so it can be in the index
 module.exports = router;
