@@ -1,0 +1,32 @@
+[
+  {
+    "user_id": 1,
+    "username": "Nigel_Uno",
+    "content": "Comment 1",
+    "date_created": "2023-10-30T12:34:56Z"
+  },
+  {
+    "user_id": 2,
+    "username": "Hoagie_Gilligan",
+    "content": "Comment 2",
+    "date_created": "2023-10-30T12:34:56Z"
+  },
+  {
+    "user_id": 3,
+    "username": "Kuki_Sanban",
+    "content": "Comment 3",
+    "date_created": "2023-10-30T12:34:56Z"
+  },
+  {
+    "user_id": 4,
+    "username": "Wally_Beetles",
+    "content": "Comment 4",
+    "date_created": "2023-10-30T12:34:56Z"
+  },
+  {
+    "user_id": 5,
+    "username": "Abby_Lincoln",
+    "content": "Comment 5",
+    "date_created": "2023-10-30T12:34:56Z"
+  }
+]
