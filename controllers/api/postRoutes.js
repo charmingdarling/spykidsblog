@@ -46,19 +46,50 @@ router.put("/:id", withAuth, async (req, res) => {
   }
 });
 
+// * -------------------
+const date = new Date();
+
+const formatDate = (date) => {
+  return date.toLocaleString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  });
+};
+
 // Route to handle getting a singlepost (GET Request)
 // http://localhost:3001/api/post/singlepost/:id
 router.get("/singlepost/:id", async (req, res) => {
   try {
-    await Post.findOne({
+    const postData = await Post.findOne({
       where: {
         id: req.params.id,
       },
     });
-    res.json({ message: "Post retrieved." });
+
+    // Check if post data found
+    if (!postData) {
+      return res.status(404).json({ message: "Post not found." });
+    }
+
+    // Format date
+    const formattedPost = {
+      ...postData.get({ plain: true }),
+      date_created: formatDate(postData.date_created),
+    };
+
+    // Render the "singlepost" view with the formatted post data
+    res.render("singlepost", {
+      post: formattedPost,
+      user: req.session.username,
+      logged_in: req.session.logged_in,
+    });
   } catch (err) {
     console.error(err);
-    res.status(400).json(err);
+    res.status(500).json(err);
   }
 });
 
