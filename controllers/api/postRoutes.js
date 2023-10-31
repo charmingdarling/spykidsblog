@@ -60,39 +60,6 @@ const formatDate = (date) => {
   });
 };
 
-// Route to handle getting a singlepost (GET Request)
-// http://localhost:3001/api/post/singlepost/:id
-// router.get("/singlepost/:id", async (req, res) => {
-//   try {
-//     const postData = await Post.findOne({
-//       where: {
-//         id: req.params.id,
-//       },
-//     });
-
-//     // Check if post data found
-//     if (!postData) {
-//       return res.status(404).json({ message: "Post not found." });
-//     }
-
-//     // Format date
-//     const formattedPost = {
-//       ...postData.get({ plain: true }),
-//       date_created: formatDate(postData.date_created),
-//     };
-
-//     // Render the "singlepost" view with the formatted post data
-//     res.render("singlepost", {
-//       post: formattedPost,
-//       user: req.session.username,
-//       logged_in: req.session.logged_in,
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json(err);
-//   }
-// });
-
 // Router to delete a post
 // http://localhost:3001/api/post/:id
 // Could have (routers.get) GET, but DELETE makes more sense
