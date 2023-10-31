@@ -1,7 +1,7 @@
 // Set up Express router, responsible for parsing incoming JSON requests.
 // Auto parses request body if the 'Content-Type' header is set to "application/json"
 const router = require("express").Router();
-const { User, Post } = require("../models"); // Require User, Post models from models folder
+const { User, Post, Comment } = require("../models"); // Require User, Post models from models folder
 const withAuth = require("../utils/auth"); // Import middleware function for authentication, checking if user is logged in before they can use a route
 
 // Route to handle homepage root endpoint with findAll(), (GET request)
@@ -69,6 +69,15 @@ router.get("/singlepost/:id", async (req, res) => {
           model: User,
           attributes: ["username", "email"],
         },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ["username"],
+            },
+          ],
+        },
       ],
     });
     console.log(req.session);
@@ -82,6 +91,7 @@ router.get("/singlepost/:id", async (req, res) => {
       logged_in: req.session.logged_in, // ... the login status ... all as variables that can be used in the view
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
