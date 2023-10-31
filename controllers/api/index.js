@@ -5,6 +5,7 @@ const router = require("express").Router(); // Dependency called to listen to di
 const profileRoutes = require("./profileRoutes");
 const userRoutes = require("./userRoutes");
 const postRoutes = require("./postRoutes");
+const commentRoutes = require("./commentRoutes");
 
 // Use userRoutes for routes, connect to /user
 // http://localhost:3001/user
@@ -17,5 +18,7 @@ router.use("/profile", profileRoutes);
 // Use userRoutes for routes, connect to /user
 // http://localhost:3001/post
 router.use("/post", postRoutes);
+
+router.use("/comment", commentRoutes);
 
 module.exports = router;
