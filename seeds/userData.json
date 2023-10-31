@@ -1,22 +1,27 @@
 [
   {
     "username": "Nigel_Uno",
-    "email": "numbuh1@kidsnextdoor.com"
+    "email": "numbuh1@kidsnextdoor.com",
+    "password": "password"
   },
   {
     "username": "Hoagie_Gilligan",
-    "email": "numbuh2@kidsnextdoor.com"
+    "email": "numbuh2@kidsnextdoor.com",
+    "password": "password"
   },
   {
     "username": "Kuki_Sanban",
-    "email": "numbuh3@kidsnextdoor.com"
+    "email": "numbuh3@kidsnextdoor.com",
+    "password": "password"
   },
   {
     "username": "Wally_Beetles",
-    "email": "numbuh4@kidsnextdoor.com"
+    "email": "numbuh4@kidsnextdoor.com",
+    "password": "password"
   },
   {
     "username": "Abby_Lincoln",
-    "email": "numbuh5@kidsnextdoor.com"
+    "email": "numbuh5@kidsnextdoor.com",
+    "password": "password"
   }
 ]
