@@ -86,7 +86,7 @@ router.get("/singlepost/:id", async (req, res) => {
     console.log(post);
     // If the post data is retrieved, the route handler renders the "singlepost" view by...
     res.render("singlepost", {
-      post, // ... passing the post data
+      post: post, // ... passing the post data, 1st post is template, second post is the variable of what is filtered
       user: req.session.username, // ... the username from the session
       logged_in: req.session.logged_in, // ... the login status ... all as variables that can be used in the view
     });
