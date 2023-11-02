@@ -2,11 +2,15 @@ const router = require("express").Router();
 const { User, Post, Comment } = require("../../models");
 const withAuth = require("../../utils/auth");
 
+//! please fix the render part - no renderings or send for api routes
+
 router.get("/newPost", withAuth, (req, res) => {
   res.render("new-post", {
     layout: "profile",
   });
 });
+
+//! please fix the render part - no renderings or send for api routes
 
 router.get("/edit/:id", withAuth, async (req, res) => {
   try {

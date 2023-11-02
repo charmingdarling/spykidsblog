@@ -4,7 +4,7 @@ const router = require("express").Router();
 const { User, Post } = require("../../models"); // Require User, Post models from models folder
 const withAuth = require("../../utils/auth"); // Import middleware function for authentication, checking if user is logged in before they can use a route
 
-// ! Remember: Never navigate to an API route
+// ! Remember: Never navigate to an API route, no render or send here
 // You can SEND a FETCH request to an API route, it's BTS work, just sending back data
 // `api` only appears in insomnia - on the browser url, it never shows up
 // it is a lowercase `u`, because it refers to userRoutes, not User model
