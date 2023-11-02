@@ -1,25 +1,30 @@
 [
   {
+    "id": 1,
     "username": "Nigel_Uno",
     "email": "numbuh1@kidsnextdoor.com",
     "password": "password"
   },
   {
+    "id": 2,
     "username": "Hoagie_Gilligan",
     "email": "numbuh2@kidsnextdoor.com",
     "password": "password"
   },
   {
+    "id": 3,
     "username": "Kuki_Sanban",
     "email": "numbuh3@kidsnextdoor.com",
     "password": "password"
   },
   {
+    "id": 4,
     "username": "Wally_Beetles",
     "email": "numbuh4@kidsnextdoor.com",
     "password": "password"
   },
   {
+    "id": 5,
     "username": "Abby_Lincoln",
     "email": "numbuh5@kidsnextdoor.com",
     "password": "password"
