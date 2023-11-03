@@ -12,6 +12,13 @@ Comment.init(
       primaryKey: true,
       autoIncrement: true,
     },
+    post_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Post",
+        key: "id",
+      },
+    },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
@@ -31,6 +38,9 @@ Comment.init(
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
+      get() {
+        return new Date(this.getDataValue("date_created")).toLocaleString();
+      },
     },
   },
   {
