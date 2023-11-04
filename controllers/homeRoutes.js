@@ -61,6 +61,7 @@ router.get("/signup", async (req, res) => {
 // http://localhost:3001/signup/:id
 router.get("/singlepost/:id", async (req, res) => {
   try {
+    const is_singlepost_page = true;
     // Fetch the post data with the associated user data
     const postData = await Post.findOne({
       where: {
@@ -91,6 +92,8 @@ router.get("/singlepost/:id", async (req, res) => {
       post: post, // ... passing the post data, 1st post is template, second post is the variable of what is filtered
       user: req.session.username, // ... the username from the session
       logged_in: req.session.logged_in, // ... the login status ... all as variables that can be used in the view
+      is_singlepost_page,
+      is_owner: req.session.user_id === post.user_id,
     });
   } catch (err) {
     console.log(err);

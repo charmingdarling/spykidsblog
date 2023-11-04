@@ -92,6 +92,7 @@ router.get("/posts/:id", withAuth, async (req, res) => {
 // http://localhost:3001/profile/edit/:id
 router.get("/edit/:id", withAuth, async (req, res) => {
   try {
+    const is_profile_edit_id_page = true;
     // Fetch post data including associated comments
     const postData = await Post.findOne({
       where: { id: req.params.id, user_id: req.session.user_id },
@@ -108,6 +109,7 @@ router.get("/edit/:id", withAuth, async (req, res) => {
       // Render the "edit" view with the post data and session information
       post,
       logged_in: req.session.logged_in,
+      is_profile_edit_id_page,
     });
   } catch (err) {
     console.error(err);
