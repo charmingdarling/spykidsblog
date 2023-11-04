@@ -43,19 +43,7 @@ document.body.addEventListener("click", (event) => {
     delButtonHandler(event);
   }
 });
-// document.querySelectorAll(".edit-btn").forEach((button) => {
-//   button.addEventListener("click", (event) => {
-//     // line below is targeting line 39 of profile.handlebars for the post.id by the data-id
-//     const edit = event.target.getAttribute("data-id");
-//     const editForm = document.querySelector(`.edit-form[data-id="${edit}]`);
-//     if (editForm) {
-//       editForm.style.display = editForm.style.display === "none" ? "" : "none";
-//     }
-//   });
-// });
 
 document
   .querySelector(".new-project-form")
   .addEventListener("submit", newFormHandler);
-
-// {{#each user.Posts as |post|}} of profile.handlebars forEach... of line below
