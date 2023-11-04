@@ -48,22 +48,28 @@ document
   .addEventListener("submit", async (event) => {
     event.preventDefault();
     console.log("update-form submitted");
-    const postID = document.querySelector("#postID").value; // need get element
+    // Get the post ID, title, content fom the ID element in HTML on edit.handlebars
+    const postID = document.querySelector("#postID").value;
     const title = document.querySelector("#title").value.trim();
     const content = document.querySelector("#update-content").value.trim();
-    if (title && content) {
-      const response = await fetch(`/api/post/${postID}`, {
-        method: "PUT",
-        body: JSON.stringify({ title, content }),
-        headers: { "Content-Type": "application/json" },
-      });
+    try {
+      if (title && content) {
+        const response = await fetch(`/api/post/${postID}`, {
+          method: "PUT",
+          body: JSON.stringify({ title, content }),
+          headers: { "Content-Type": "application/json" },
+        });
 
-      if (response.ok) {
-        document.location.reload();
+        if (response.ok) {
+          // Redirect to dashboard/profile page
+          document.location.href = `/profile`;
+        } else {
+          alert("Failed to update post.");
+        }
       } else {
-        alert("Failed to update post.");
+        alert("Please fill out both title and content.");
       }
-    } else {
-      alert("Please fill out both title and content.");
+    } catch (error) {
+      alert(error);
     }
   });
