@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kids Blog</title>
+    <title>Kids Next Door</title>
     <link rel="stylesheet" href="/css/jass.css" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
@@ -12,24 +12,23 @@
     <div class="flex-column justify-space-around">
       <header class="display-flex justify-space-between align-center p-2">
         <h1>
-          Kids Blog
+          Kids Next Door
         </h1>
         <nav>
-          <a href="/">home</a>
-          |
           {{#if logged_in}}
             {{#if is_profile_page}}
+              <a href="/">home</a>
               <a href="#" class="no-button" id="logout">logout</a>
-            {{else}}
-              <a href="/profile">profile</a>
-              |
+            {{else if is_home_page}}
+              <a href="/profile">dashboard</a>
               <a href="#" class="no-button" id="logout">logout</a>
             {{/if}}
           {{else}}
+            <a href="/">home</a>
             <a href="/login">login</a>
-            |
             <a href="/signup">signup</a>
           {{/if}}
+
         </nav>
       </header>
 
@@ -42,9 +41,9 @@
       <footer>
       </footer>
     </div>
+
     <!-- Render script for logged in users only -->
     {{#if logged_in}}
-
       <script src="/js/logout.js"></script>
     {{/if}}
   </body>
