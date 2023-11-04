@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { User, Post, Comment } = require("../models");
 const withAuth = require("../utils/auth");
 
-// Display Route
+// Display Route where you have forms and rendering
 
 // Route to retrieve one user using findByPK() at the root endpoint
 // http://localhost:3001/profile/
@@ -28,7 +28,7 @@ router.get("/", withAuth, async (req, res) => {
 });
 
 // Route to handle finding one user by 'id'
-// http://localhost:3001/:id
+// http://localhost:3001/profile/:id
 router.get("/:id", withAuth, async (req, res) => {
   try {
     // Fetch user data including associated posts and comments
@@ -60,8 +60,36 @@ router.get("/:id", withAuth, async (req, res) => {
   }
 });
 
+// Route to handle viewing all posts from a user
+// http://localhost:3001/profile/posts/
+router.get("/posts/:id", withAuth, async (req, res) => {
+  try {
+    const viewAllPosts = true; // Set viewAllPosts to true for this route
+    const postData = await Post.findAll({
+      where: { user_id: req.session.id },
+      include: [
+        {
+          model: Comment,
+          include: [User],
+        },
+      ],
+    });
+    console.log(postData);
+    const posts = postData.map((post) => post.get({ plain: true })); // Convert the Sequelize model instances to plain JavaScript objects
+    console.log(posts);
+    res.render("allPosts", {
+      // Render the "profile" view with the post data and session information
+      posts,
+      logged_in: req.session.logged_in,
+      viewAllPosts,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // Route to handle edit a specific post from a user by 'id', findOne()
-// http://localhost:3001/edit/:id
+// http://localhost:3001/profile/edit/:id
 router.get("/edit/:id", withAuth, async (req, res) => {
   try {
     // Fetch post data including associated comments
@@ -86,34 +114,6 @@ router.get("/edit/:id", withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-// router.get("/", withAuth, async (req, res) => {
-//   try {
-//     const userData = await User.findOne({
-//       where: { id: req.session.user_id },
-//       include: [
-//         {
-//           model: Post,
-//           include: [
-//             {
-//               model: Comment,
-//               include: [User],
-//             },
-//           ],
-//         },
-//       ],
-//     });
-//     const user = userData.get({ plain: true });
-//     console.log(user);
-//     res.render("profile", {
-//       user,
-//       logged_in: req.session.logged_in,
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json(err);
-//   }
-// });
 
 // Exporting the router so it can be in the index
 module.exports = router;
