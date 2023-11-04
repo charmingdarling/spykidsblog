@@ -26,10 +26,6 @@
         <button type="submit" class="btn btn-primary">Create</button>
       </div>
     </form>
-
-    <!-- RIGHT HERE, WHEN I CLICK CREATE, IT DOESN'T SHOW UP ME THE NEW POST. -->
-    <!-- GENERATE PAGE FOR SHOWING POST THAT WAS JUST CREATED -->
-
   </div>
 
   {{#if user.Posts.length}}
@@ -39,7 +35,10 @@
       {{#each user.Posts as |post|}}
         <div class="row mb-2">
           <div class="col-md-8">
-            <h4><a href="/profile/{{post.id}}">{{post.title}}</a></h4>
+            {{!-- <h4><a href="/profile/{{post.id}}">{{post.title}}</a></h4> --}}
+
+            <h4><a href="/singlepost/{{post.id}}">{{post.title}}</a></h4>
+
             <p>{{post.content}}</p>
             <form
               class="edit-form"
@@ -68,11 +67,12 @@
               data-id="{{post.id}}"
               type="submit"
             >DELETE</button>
-            <button
-              class="btn btn-sm btn-primary edit-btn"
-              data-id="{{post.id}}"
-              type="submit"
-            >EDIT</button>
+            <a href="/profile/edit/{{post.id}}">
+              <button
+                class="btn btn-sm btn-primary edit-btn"
+                data-id="{{post.id}}"
+                type="submit"
+              >EDIT</button></a>
           </div>
 
         </div>
@@ -81,4 +81,4 @@
   {{/if}}
 </div>
 
-<script src="./js/profile.js"></script>
+<script src="./js/profileHome.js"></script>
