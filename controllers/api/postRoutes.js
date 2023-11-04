@@ -28,17 +28,15 @@ router.post("/", withAuth, async (req, res) => {
 });
 
 // Route to handle updating a post (PUT Request)
+// This is the edit
 // http://localhost:3001/api/post/:id
 router.put("/:id", withAuth, async (req, res) => {
   try {
-    const updateData = await Post.update(req.params.id);
-    // req.body is the updateData
-    const { title, content } = req.body;
-    await updateData.update({
-      title,
-      content,
+    const updateData = await Post.update(req.body, {
+      where: { id: req.params.id },
     });
-
+    console.log(req.body, req.params);
+    console.log(updateData);
     res.status(200).json(updateData);
   } catch (err) {
     console.error(err);
