@@ -18,22 +18,33 @@ const seedDatabase = async () => {
   });
 
   // Create posts and comments
+  // loops over the postData array
   for (const singlepost of postData) {
-    // loops over the postData array
+    // ----------------------------------------------------------------------------------------- //
+    // Store the user we find a specific post, based off the user_id from singlepost (post data)
+    // users.find = Line 14
+    // (user) = a parameter from the entirety of the User model is represented in (user)
+    // => - stating that this is a boolean: YES, found user.id === singlepost.user_id or NO we did not find it
+    // user_id = take only the id from User model, see if matches user_id of singlepost of postData
+    // ----------------------------------------------------------------------------------------- //
+    const postCreator = users.find((user) => user.id === singlepost.user_id);
 
-    // Create a post
-    await Post.create({
-      // creates Post instances
-      ...singlepost, // spread the properties of each post and ...
-      user_id: users[Math.floor(Math.random() * users.length)].id, // assigns a random user_id from the previously created users
-    });
-
-    for (const comment of commentData) {
-      await Comment.create({
-        ...comment,
-        user_id: users[Math.floor(Math.random() * users.length)].id,
-        post_id: post.id,
+    // Only create a post IF the matching user is found
+    if (postCreator) {
+      // Create a post
+      const createdPost = await Post.create({
+        // creates Post instances
+        ...singlepost, // spread the properties of each post and ...
+        user_id: postCreator.id, // assigning the correct users id to each post
       });
+
+      for (const comment of commentData) {
+        if (comment.post_id === createdPost.id) {
+          await Comment.create({
+            ...comment,
+          });
+        }
+      }
     }
   }
   process.exit(0); // exits the Node.js process, terminating the script
