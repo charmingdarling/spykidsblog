@@ -8,6 +8,7 @@ const withAuth = require("../utils/auth"); // Import middleware function for aut
 // http://localhost:3001/
 router.get("/", async (req, res) => {
   try {
+    const is_home_page = true;
     // get all posts and JOIN with user data
     // purpose of this code is to convert an array of Sequelize model instances into an array of plain JS objects.
     // This is often done when passing data to templates for rendering or when preparing data for a JSON response.
@@ -28,6 +29,7 @@ router.get("/", async (req, res) => {
       // render an HTML view named 'homepage' as first argument, second argument is an object containing data that will be passed to the view for rendering
       posts,
       logged_in: req.session.logged_in, // include information about whether a user is logged in when rendering views, conditionally show different content based on user authentication status
+      is_home_page,
     });
   } catch (err) {
     console.error(err);
