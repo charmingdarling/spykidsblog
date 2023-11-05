@@ -20,7 +20,8 @@ router.get("/", withAuth, async (req, res) => {
     // then, `user` template is rendered and userData is passed
     res.render("profile", {
       user,
-      is_profile_page: true, // set the is_profile_page property to true
+      logged_in: req.session.logged_in, // include information about whether a user is logged in when rendering views, conditionally show different content based on user authentication status
+      is_profile_page, // set the is_profile_page property to true
     });
   } catch (err) {
     res.status(500).json(err);
