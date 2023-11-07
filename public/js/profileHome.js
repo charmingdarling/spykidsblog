@@ -36,8 +36,6 @@ const delButtonHandler = async (event) => {
 };
 
 document.body.addEventListener("click", (event) => {
-  console.log("IS THIS WORKING?");
-  console.log("IS THIS WORKING?");
   console.log(event.target);
   if (event.target.matches(".btn-danger")) {
     delButtonHandler(event);
@@ -45,5 +43,5 @@ document.body.addEventListener("click", (event) => {
 });
 
 document
-  .querySelector(".new-project-form")
+  .querySelector(".new-post-form")
   .addEventListener("submit", newFormHandler);
