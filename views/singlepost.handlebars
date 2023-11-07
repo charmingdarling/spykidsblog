@@ -1,4 +1,4 @@
-<div class="row mb-4">
+<div class="row mb-4 singlePost">
   <div class="col-md-5">
     <h3>
       {{post.title}}
@@ -9,25 +9,33 @@
     {{post.date_created}}
     <hr />
     <p>{{post.content}}</p>
-    {{#unless logged_in}}
-      <div class="leave-comment-btn">
-        <a href="/login"><button
-            class="comment-btn btn btn-sm btn-secondary"
-            data-postid="{{post.id}}"
-          >Leave a Comment</button></a>
-      </div>
-    {{/unless}}
+    <div class="leave-comment-btn">
+      <button
+        class="comment-btn btn btn-sm btn-secondary"
+        data-postid="{{post.id}}"
+      >Leave a Comment</button>
+    </div>
+    {{#if is_owner}}
+      <button
+        class="btn btn-sm btn-primary"
+        data-postid="{{post.id}}"
+      >Edit</button>
+
+      <script src="/js/post.js"></script>
+    {{/if}}
   </div>
-  {{! Show existing comments }}
 
   <div id="comment-container">
     <h4>Comments</h4>
+    {{!-- {{#each post.comments as |comment|}} --}}
+
+    {{! Changed the 'post.comments' to post.Comments }}
     {{#each post.Comments as |comment|}}
       <div class="row">
         <div class="col-md-6">
           {{comment.User.username}}
           at
-          {{date_created}}
+          {{comment.date_created}}
           <p>{{comment.content}}</p>
         </div>
       </div>
@@ -36,15 +44,15 @@
 </div>
 
 {{#if logged_in}}
-  <div class="comment-form-group" class="hidden">
-    <form data-postID="{{post.id}}" id="new-comment-form">
-      {{! referring to model id }}{{! grab new-comment-form in vanilla JS }}
+  <div id="comment-form-group" class="hidden">
+    <form data-postID="{{post.id}}" class="new-comment-form">
       <label for="comment">Create Comment:</label>
       <input class="form-input" type="text" id="comment" name="comment" />
+      {{! This is creating 2 text boxes so I removed the smaller one }}
+      {{! <textarea id="add-comment-textarea"></textarea> }}
       <button class="btn btn-sm btn-secondary" type="submit">SUBMIT</button>
     </form>
   </div>
 {{/if}}
 
 <script src="/js/comment.js"></script>
-{{! script tag for commenting }}
