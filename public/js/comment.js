@@ -1,7 +1,5 @@
-const newCommentForm = document.getElementById("new-comment-form");
-console.log(newCommentForm);
-// const commentBtn = document.querySelector(".comment-btn"); // Find the comment button
-// const commentForm = document.querySelector(".new-comment-form"); // Find the comment form
+const commentBtn = document.querySelector(".comment-btn"); // Find the comment button
+const commentForm = document.getElementById("comment-form-group"); // Find the comment form by its id
 
 // Attach an event listener to the form on submit to the comment form
 async function addComment(event) {
@@ -32,4 +30,5 @@ async function addComment(event) {
   }
 }
 
-newCommentForm.addEventListener("submit", addComment);
+document.addEventListener("submit", addComment);
+// document.addEventListener("click", commentBtn);
