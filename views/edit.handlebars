@@ -1,15 +1,3 @@
-{{! Create a form that is filled out with the post info from the db 
-add a button to submit
-onsubmit run a function that sends your edited post data to the update post route
- }}
-
-{{!-- 
- <input type="hidden" id="postId" value="{{post.id}}" />
- <input id="title" value="{{post.title}}" type="text" />
-
- <button>Submit</button>
-  --}}
-
 <div class="col-md-6">
   <h2>Update</h2>
 
@@ -25,7 +13,7 @@ onsubmit run a function that sends your edited post data to the update post rout
         class="form-input"
         type="text"
         id="update-content"
-        rows="5"
+        rows="6"
       >{{post.content}}</textarea>
     </div>
     <div class="form-group">
