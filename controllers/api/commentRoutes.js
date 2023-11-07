@@ -18,6 +18,7 @@ router.post("/", withAuth, async (req, res) => {
       // on the front end there is a token that is sent with the request to the backend
       username: req.session.username,
     });
+    console.log(commentData);
 
     res.json(commentData);
   } catch (err) {

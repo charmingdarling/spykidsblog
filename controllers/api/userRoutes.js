@@ -41,25 +41,26 @@ router.post("/login", async (req, res) => {
       where: { email: req.body.email },
     });
 
-    // Validate the user's password
-    const validPassword = await newUserData?.checkPassword(req.body.password);
+    if (newUserData) {
+      // Validate the user's password
+      const validPassword = await newUserData?.checkPassword(req.body.password);
 
-    // If user exists and password is correct, create a session and respond with user data
-    if (newUserData && validPassword) {
-      req.session.save(() => {
-        req.session.user_id = newUserData.id;
-        req.session.username = newUserData.username;
-        req.session.logged_in = true;
-        res.status(200).json(newUserData);
-      });
+      if (validPassword) {
+        req.session.save(() => {
+          req.session.user_id = newUserData.id;
+          req.session.username = newUserData.username;
+          req.session.logged_in = true;
+          res.status(200).json(newUserData);
+        });
+      } else {
+        res.status(400).json({ message: "Invalid password." });
+      }
     } else {
-      // If login fails, respond with a 400 status and a message
-      res.status(400).json({ message: "Login failed." });
+      res.status(400).json({ message: "User not found." });
     }
-  } catch (err) {
-    // If an error occurs, log the error and respond with a 400 status and the error
-    console.error(err);
-    res.status(400).json(err);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal Server Error." }); // Corrected syntax here
   }
 });
 

@@ -28,7 +28,7 @@ router.get("/", async (req, res) => {
     res.render("homepage", {
       // render an HTML view named 'homepage' as first argument, second argument is an object containing data that will be passed to the view for rendering
       posts,
-      logged_in: req.session.logged_in, // include information about whether a user is logged in when rendering views, conditionally show different content based on user authentication status
+      logged_in: req.session && req.session.logged_in, // include information about whether a user is logged in when rendering views, conditionally show different content based on user authentication status
       is_home_page,
     });
   } catch (err) {
@@ -41,7 +41,7 @@ router.get("/", async (req, res) => {
 // http://localhost:3001/login
 router.get("/login", (req, res) => {
   // conditionally checks if user is logged in by examining 'logged_in' property in the 'req.session' object
-  if (req.session.logged_in) {
+  if (req.session && req.session.logged_in) {
     return res.redirect("/"); // if truthy, redirect them to homepage endpoint
   }
   res.render("login");
@@ -61,6 +61,7 @@ router.get("/signup", async (req, res) => {
 // http://localhost:3001/signup/:id
 router.get("/singlepost/:id", async (req, res) => {
   try {
+    const is_singlepost_page = true;
     // Fetch the post data with the associated user data
     const postData = await Post.findOne({
       where: {
@@ -86,10 +87,12 @@ router.get("/singlepost/:id", async (req, res) => {
     // Convert the Sequelize model instance to a plain JavaScript object
     const post = postData.get({ plain: true });
     console.log(post);
-    res.render("post", {
+    // If the post data is retrieved, the route handler renders the "singlepost" view by...
+    res.render("singlepost", {
       post: post, // ... passing the post data, 1st post is template, second post is the variable of what is filtered
       user: req.session.username, // ... the username from the session
       logged_in: req.session.logged_in, // ... the login status ... all as variables that can be used in the view
+      is_singlepost_page,
       is_owner: req.session.user_id === post.user_id,
     });
   } catch (err) {

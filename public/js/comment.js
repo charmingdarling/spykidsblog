@@ -1,5 +1,5 @@
 const commentBtn = document.querySelector(".comment-btn"); // Find the comment button
-const commentForm = document.getElementById("comment-form-group"); // Find the comment form by its id
+const commentForm = document.getElementById("new-comment-form"); // Find the comment form by its id
 
 // Attach an event listener to the form on submit to the comment form
 async function addComment(event) {
@@ -7,7 +7,10 @@ async function addComment(event) {
   // Attached to the form
   event.preventDefault();
   const commentTextarea = document.getElementById("comment").value.trim();
-  const postId = newCommentForm.dataset.postid;
+  console.log(commentForm);
+  const postId = commentForm.dataset.postid;
+  console.log(postId);
+  if (!commentTextarea || !postId) return;
   try {
     const response = await fetch("/api/comment/", {
       // This is front end
@@ -30,5 +33,13 @@ async function addComment(event) {
   }
 }
 
-document.addEventListener("submit", addComment);
-// document.addEventListener("click", commentBtn);
+const hideShowLeaveAComment = () => {
+  if (commentForm.classList.contains("hidden")) {
+    commentForm.classList.remove("hidden");
+  } else {
+    commentForm.classList.add("hidden");
+  }
+};
+
+commentForm.addEventListener("submit", addComment);
+commentBtn.addEventListener("click", hideShowLeaveAComment);

@@ -26,12 +26,10 @@
               <a href="/">home</a>
               <a href="/profile">dashboard</a>
               <a href="#" class="no-button" id="logout">logout</a>
-            {{else if is_owner}}
-              {{#if is_singlepost_page}}
-                <a href="/">home</a>
-                <a href="/profile">dashboard</a>
-                <a href="#" class="no-button" id="logout">logout</a>
-              {{/if}}
+            {{else if is_singlepost_page}}
+              <a href="/">home</a>
+              <a href="/profile">dashboard</a>
+              <a href="#" class="no-button" id="logout">logout</a>
             {{/if}}
           {{else}}
             <a href="/login">login</a>

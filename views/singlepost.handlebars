@@ -44,8 +44,8 @@
 </div>
 
 {{#if logged_in}}
-  <div id="comment-form-group" class="hidden">
-    <form data-postID="{{post.id}}" class="new-comment-form">
+  <div id="comment-form-group">
+    <form data-postID="{{post.id}}" id="new-comment-form" class="hidden">
       <label for="comment">Create Comment:</label>
       <input class="form-input" type="text" id="comment" name="comment" />
       {{! This is creating 2 text boxes so I removed the smaller one }}
